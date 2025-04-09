@@ -23,7 +23,7 @@ const ThemeToggle = () => {
         <Sun className="h-5 w-5 text-yellow-300" />
       </div>
       <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${theme === 'dark' ? 'translate-y-full' : 'translate-y-0'}`}>
-        <Moon className="h-5 w-5 text-accent" />
+        <Moon className="h-5 w-5 text-black" />
       </div>
       <span className="sr-only">Toggle theme</span>
     </Button>
