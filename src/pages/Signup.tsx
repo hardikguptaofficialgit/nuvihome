@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -6,8 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from "sonner";
-import { EyeIcon, EyeOffIcon, ArrowRight, CheckCircle } from 'lucide-react';
-import { UserPlus } from 'lucide-react';
+import { EyeIcon, EyeOffIcon, UserPlus } from 'lucide-react';
 
 // Add email validation function
 const isValidEmail = (email: string): boolean => {
@@ -26,79 +24,47 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const validateForm = () => {
-    if (!email.trim()) {
-      toast.error('Please enter your email');
-      return false;
-    }
-    
-    if (!isValidEmail(email)) {
-      toast.error('Please enter a valid email address');
-      return false;
-    }
-    
-    if (!password.trim()) {
-      toast.error('Please enter a password');
-      return false;
-    }
-    
-    if (password.length < 6) {
-      toast.error('Password must be at least 6 characters long');
-      return false;
-    }
-    
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-      return false;
-    }
-    
+    if (!email.trim()) return toast.error('Please enter your email') && false;
+    if (!isValidEmail(email)) return toast.error('Please enter a valid email address') && false;
+    if (!password.trim()) return toast.error('Please enter a password') && false;
+    if (password.length < 6) return toast.error('Password must be at least 6 characters long') && false;
+    if (password !== confirmPassword) return toast.error('Passwords do not match') && false;
     return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-    
+    if (!validateForm()) return;
+
     setIsLoading(true);
-    
     try {
       await signup(email, password, name);
       toast.success('Signup successful. Please check your email for verification.');
-      
-      // Navigate to login after signup
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
-      console.error('Signup error:', error);
       toast.error(error instanceof Error ? error.message : 'Something went wrong');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="min-h-screen flex flex-col justify-center items-center pt-20 pb-16 px-4">
       <div className="w-full max-w-md">
-        <div className="glass-card p-8 rounded-2xl animate-fade-in">
+        <div className="glass-card p-8 rounded-2xl animate-fade-in shadow-lg">
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold">Create Your Account</h1>
-            <p className="text-muted-foreground mt-2">Join Nuvibrainz and start your learning journey</p>
+            <h1 className="text-2xl font-bold text-foreground">Create Your Account</h1>
+            <p className="text-muted-foreground mt-2">Join Nuvibrainz Now !!</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name */}
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Hardik Gupta"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -106,12 +72,13 @@ const Signup = () => {
               />
             </div>
 
+            {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="hardikgupta8792@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -119,6 +86,7 @@ const Signup = () => {
               />
             </div>
 
+            {/* Password */}
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
@@ -134,16 +102,15 @@ const Signup = () => {
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-                  onClick={toggleShowPassword}
+                  onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOffIcon size={18} /> : <EyeIcon size={18} />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Must be at least 6 characters long
-              </p>
+              <p className="text-xs text-muted-foreground mt-1">Must be at least 6 characters long</p>
             </div>
 
+            {/* Confirm Password */}
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
@@ -157,27 +124,37 @@ const Signup = () => {
               />
             </div>
 
+            {/* Submit Button */}
             <Button
-              type="submit"
-              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-lg flex items-center justify-center gap-2"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-background border-t-transparent" />
-              ) : (
-                <>
-                  <UserPlus size={18} />
-                  Create Account
-                </>
-              )}
-            </Button>
+  type="submit"
+  className="w-full 
+             bg-black text-white hover:bg-accent hover:text-black 
+             dark:bg-white dark:text-black dark:hover:bg-accent 
+             transition-all duration-200 
+             rounded-lg flex items-center justify-center gap-2"
+  disabled={isLoading}
+>
+  {isLoading ? (
+    <div className="h-5 w-5 animate-spin rounded-full border-2 border-background border-t-transparent" />
+  ) : (
+    <>
+      <UserPlus size={18} />
+      Create Account
+    </>
+  )}
+</Button>
 
+            {/* Footer link */}
             <div className="text-center mt-4">
               <p className="text-sm text-muted-foreground">
                 Already have an account?{' '}
-                <Link to="/login" className="text-accent hover:underline">
-                  Sign in
-                </Link>
+                <Link
+  to="/login"
+  className="text-black dark:text-accent hover:underline"
+>
+  Sign in
+</Link>
+
               </p>
             </div>
           </form>

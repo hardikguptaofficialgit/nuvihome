@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,7 +37,6 @@ const Login = () => {
   const handleLoginWithGoogle = async () => {
     setLoading(true);
     try {
-      // This would need to be implemented in the AuthContext
       toast.info('Google login is not implemented yet');
     } catch (error) {
       toast.error('An error occurred during Google login');
@@ -53,7 +51,7 @@ const Login = () => {
       <Card className="w-full max-w-md glass-card animate-fade-in">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center">Login</CardTitle>
-          <CardDescription className="text-center">
+          <CardDescription className="text-center text-muted-foreground">
             Enter your email and password to login
           </CardDescription>
         </CardHeader>
@@ -71,12 +69,11 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="rounded-lg"
               />
-                
             </div>
           
-            <div className="grid gap-2 mt-8">
-            
+            <div className="grid gap-2 mt-6">
               <Label htmlFor="password">
                 <Lock className="mr-2 h-4 w-4 inline-block align-middle" />
                 Password
@@ -88,28 +85,47 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="rounded-lg"
               />
             </div>
-            <Button disabled={loading} className="w-full mt-4">
-              {loading ? 'Logging in...' : 'Login'}
-            </Button>
+
+            <Button 
+  disabled={loading} 
+  className="w-full mt-6 
+             bg-black text-white hover:bg-accent hover:text-black 
+             dark:bg-white dark:text-black dark:hover:bg-accent 
+             transition-all duration-200 
+             rounded-lg"
+>
+  {loading ? 'Logging in...' : 'Login'}
+</Button>
+
           </form>
-          <div className="relative">
+
+          <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
-              </span>
+              <span className="bg-background px-2 text-muted-foreground">or continue with</span>
             </div>
           </div>
-          <Button variant="outline" disabled={loading} className="w-full" onClick={handleLoginWithGoogle}>
+
+          <Button 
+            variant="outline" 
+            disabled={loading} 
+            onClick={handleLoginWithGoogle}
+            className="w-full border-black text-black hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black rounded-lg"
+          >
             {loading ? 'Loading...' : 'Google'}
           </Button>
         </CardContent>
-        <div className="p-6 pt-0 text-center">
-          Don't have an account? <Link to="/signup" className="text-primary underline">Sign up</Link>
+
+        <div className="p-6 pt-0 text-center text-sm text-muted-foreground">
+          Don't have an account?{' '}
+          <Link to="/signup" className="text-black dark:text-accent hover:underline">
+            Sign up
+          </Link>
         </div>
       </Card>
     </div>

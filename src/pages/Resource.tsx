@@ -3,16 +3,71 @@ import { useResources } from '@/contexts/ResourceContext';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Download, Link2, Share2, Folder, User, Calendar ,X, Send, PhoneCall } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { Download, Link2, Share2, Folder, User, Calendar, X, Eye, ZoomIn, ZoomOut, RotateCw, ChevronLeft, ChevronRight, Maximize, Printer, Lock } from 'lucide-react';
 
 const Resource = () => {
   const { resources } = useResources();
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewZoom, setPreviewZoom] = useState(1);
+  const [previewPage, setPreviewPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-  const handleCopyLink = (url: string) => {
+  const handleCopyLink = (url) => {
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
+  };
+
+  const handleZoomIn = () => {
+    setPreviewZoom(Math.min(previewZoom + 0.25, 2.5));
+  };
+
+  const handleZoomOut = () => {
+    setPreviewZoom(Math.max(previewZoom - 0.25, 0.5));
+  };
+
+  const handleResetZoom = () => {
+    setPreviewZoom(1);
+  };
+
+  const handleNextPage = () => {
+    if (previewPage < totalPages) {
+      setPreviewPage(previewPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (previewPage > 1) {
+      setPreviewPage(previewPage - 1);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.querySelector('.pdf-preview-container')?.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  const handlePrint = () => {
+    const printWindow = window.open(previewUrl, '_blank');
+    printWindow.onload = () => {
+      printWindow.print();
+    };
+  };
+
+  const openPreview = (url) => {
+    setPreviewUrl(url);
+    setPreviewZoom(1);
+    setPreviewPage(1);
+    setIsPreviewOpen(true);
+    // In a real implementation, we would fetch the total pages from the PDF here
+    setTotalPages(10); // Placeholder
   };
 
   return (
@@ -39,7 +94,7 @@ const Resource = () => {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="h-48 bg-gradient-to-br from-accent/5 to-secondary/30 flex items-center justify-center relative">
-              <img
+                <img
                   src="https://res.cloudinary.com/ddx6avza4/image/upload/v1744129312/n_rz5riq.png"
                   alt="Logo"
                   className="w-20 h-20 object-contain"
@@ -49,14 +104,13 @@ const Resource = () => {
               <CardContent className="p-6">
                 <div className="flex flex-wrap gap-2 mb-3">
                   {res.tags.slice(0, 3).map((tag, i) => (
-                    <Badge key={i} variant="outline" className="bg-accent/10 text-black dark:text-accent border-accent/30"
->
+                    <Badge key={i} variant="outline" className="bg-accent/10 text-black dark:text-accent border-accent/30">
                       {tag}
                     </Badge>
                   ))}
                 </div>
                 <h2 className="text-xl font-semibold mb-2 text-black dark:text-white transition-none line-clamp-2">
-                {res.title}
+                  {res.title}
                 </h2>
                 <p className="text-muted-foreground text-sm line-clamp-3 mb-4">{res.description}</p>
 
@@ -74,19 +128,17 @@ const Resource = () => {
 
               <CardFooter className="px-6 py-4 bg-secondary/10 border-t border-border flex flex-col gap-2">
                 <div className="grid grid-cols-2 gap-2 w-full">
-                <Button 
-  className="w-full bg-accent text-black dark:text-black hover:bg-accent/90 flex items-center gap-2"
-  onClick={() => window.open(res.downloadUrl, '_blank')}
->
-  <Download size={16} />
-  Download
-</Button>
+                  <Button 
+                    className="w-full bg-accent text-black dark:text-black hover:bg-accent/90 flex items-center gap-2"
+                    onClick={() => window.open(res.downloadUrl, '_blank')}
+                  >
+                    <Download size={16} />
+                    Download
+                  </Button>
 
                   <Button 
                     variant="outline"
                     className="border-black text-black hover:bg-accent hover:text-black dark:border-accent dark:text-accent dark:hover:text-black flex items-center gap-2"
-
-         
                     onClick={() => handleCopyLink(res.downloadUrl)}
                   >
                     <Link2 size={16} />
@@ -94,22 +146,101 @@ const Resource = () => {
                   </Button>
                 </div>
 
-                <Dialog>
+                <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
                   <DialogTrigger asChild>
-                  <Button
-  variant="ghost"
-  className="text-sm text-black dark:text-white dark:hover:text-black hover:underline mt-2"
->
-
+                    <Button
+                      variant="ghost"
+                      className="text-sm text-black dark:text-white dark:hover:text-black hover:underline mt-2 flex items-center gap-2"
+                      onClick={() => openPreview(res.downloadUrl)}
+                    >
+                      <Eye size={16} />
                       Preview Notes
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="w-full max-w-4xl h-[90vh] p-0 overflow-hidden">
-                    <iframe 
-                      src={res.downloadUrl} 
-                      className="w-full h-full border-none"
-                      title="Preview PDF"
-                    ></iframe>
+                  <DialogContent className="w-full max-w-6xl h-[90vh] p-0 overflow-hidden bg-white dark:bg-gray-900">
+                    <div className="h-full flex flex-col">
+                      {/* PDF Toolbar */}
+                      <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-gray-50 dark:bg-gray-800">
+                        <div className="flex items-center gap-2">
+                          <DialogTitle className="m-0 text-lg font-medium truncate max-w-md">
+                            {resources.find(r => r.downloadUrl === previewUrl)?.title || "Document Preview"}
+                          </DialogTitle>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm" onClick={handlePrevPage} disabled={previewPage <= 1} className="text-black dark:text-white">
+                            <ChevronLeft size={16} />
+                          </Button>
+                          <span className="text-sm text-black dark:text-white">
+                            Page {previewPage} of {totalPages}
+                          </span>
+                          <Button variant="ghost" size="sm" onClick={handleNextPage} disabled={previewPage >= totalPages} className="text-black dark:text-white">
+                            <ChevronRight size={16} />
+                          </Button>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm" onClick={handleZoomOut} className="text-black dark:text-white">
+                            <ZoomOut size={16} />
+                          </Button>
+                          <span className="text-sm text-black dark:text-white">{Math.round(previewZoom * 100)}%</span>
+                          <Button variant="ghost" size="sm" onClick={handleZoomIn} className="text-black dark:text-white">
+                            <ZoomIn size={16} />
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={handleResetZoom} className="text-black dark:text-white">
+                            <RotateCw size={16} />
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={toggleFullscreen} className="text-black dark:text-white">
+                            <Maximize size={16} />
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={handlePrint} className="text-black dark:text-white">
+                            <Printer size={16} />
+                          </Button>
+                          <DialogClose >
+                           
+                          </DialogClose>
+                          <DialogClose >
+                           
+                          </DialogClose>
+                          <DialogClose >
+                           
+                          </DialogClose>
+                        </div>
+
+                      </div>
+                      
+                      {/* PDF Viewer */}
+                      <div className="flex-1 overflow-auto bg-gray-100 dark:bg-gray-800 pdf-preview-container">
+                        <div 
+                          className="w-full h-full flex items-center justify-center"
+                          style={{ transform: `scale(${previewZoom})`, transition: 'transform 0.2s ease' }}
+                        >
+                          <iframe 
+                            src={previewUrl} 
+                            className="w-full h-full border-none"
+                            title="Preview PDF"
+                          ></iframe>
+                        </div>
+                      </div>
+                      
+                      {/* PDF Footer */}
+                      <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-gray-50 dark:bg-gray-800">
+                        <div className="flex items-center gap-2">
+                          <Button 
+                            className="bg-accent text-black dark:text-black hover:bg-accent/90 flex items-center gap-2"
+                            onClick={() => window.open(previewUrl, '_blank')}
+                          >
+                            <Download size={16} />
+                            Download PDF
+                          </Button>
+                        </div>
+                        
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Lock size={14} /> 
+                          <span>Nuvi+ Security</span>
+                        </div>
+                      </div>
+                    </div>
                   </DialogContent>
                 </Dialog>
 

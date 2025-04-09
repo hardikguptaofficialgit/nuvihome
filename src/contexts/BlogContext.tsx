@@ -48,41 +48,42 @@ const mockPosts: BlogPost[] = [
     `,
     author: 'Dr. Sharma',
     date: '2023-03-15',
-    imageUrl: '/placeholder.svg',
+    imageUrl: 'https://res.cloudinary.com/ddx6avza4/image/upload/v1744129312/n_rz5riq.png',
     tags: ['JEE', 'Study Tips', 'Exam Preparation']
   },
   {
     id: '2',
-    title: 'NEET Preparation: Balancing PCB',
-    excerpt: 'Finding the right balance between Physics, Chemistry, and Biology for NEET preparation.',
+    title: 'JEE Preparation: Balancing PCM',
+    excerpt: 'Mastering the right balance between Physics, Chemistry, and Math for JEE preparation.',
     content: `
-      <p>NEET (National Eligibility cum Entrance Test) is a competitive exam that tests your knowledge in Physics, Chemistry, and Biology. Balancing these three subjects effectively is crucial for success.</p>
+      <p>JEE (Joint Entrance Examination) is one of the most challenging engineering entrance exams in India. It requires a well-structured and balanced approach to Physics, Chemistry, and Mathematics (PCM) to maximize your score.</p>
       
-      <h3>Understanding the NEET Structure</h3>
-      <p>NEET consists of 180 questions (45 each from Physics and Chemistry, and 90 from Biology). With limited preparation time, it's essential to allocate your resources wisely.</p>
+      <h3>Understanding the JEE Exam Structure</h3>
+      <p>JEE Main and Advanced test your conceptual understanding, problem-solving speed, and accuracy across PCM. Each subject carries equal weight, making it essential to balance preparation time effectively.</p>
       
-      <h3>Biology: Your Stronghold</h3>
-      <p>Biology carries the maximum weightage in NEET. Focus on NCERT textbooks thoroughly. Create diagrams and flowcharts to visualize complex processes. Memorize important terms, definitions, and classifications.</p>
+      <h3>Mathematics: Practice is Power</h3>
+      <p>Math requires consistent practice and clarity in fundamentals. Focus on mastering NCERT and standard reference books. Daily problem-solving and revising important formulas will help build speed and accuracy.</p>
       
-      <h3>Chemistry: The Bridge</h3>
-      <p>Chemistry can bridge the gap between your scores in Biology and Physics. Physical Chemistry requires conceptual clarity, while Organic and Inorganic Chemistry need regular revision and practice.</p>
+      <h3>Chemistry: The Game Changer</h3>
+      <p>Chemistry is often considered scoring if approached right. Physical Chemistry needs conceptual understanding and problem-solving, Organic Chemistry relies on mechanisms and reactions, while Inorganic Chemistry demands strong memory and NCERT focus.</p>
       
-      <h3>Physics: The Challenge</h3>
-      <p>Many students find Physics challenging. Break down complex topics into smaller, manageable parts. Focus on understanding concepts rather than memorizing formulas. Regular practice of numerical problems is essential.</p>
+      <h3>Physics: Conceptual Clarity is Key</h3>
+      <p>Physics requires deep conceptual understanding and regular practice. Focus on derivations, laws, and numerical problem-solving. Prioritize high-weightage topics like Mechanics, Electrostatics, and Modern Physics.</p>
       
       <h3>Creating a Balanced Study Plan</h3>
-      <p>Allocate time based on your strengths and weaknesses. If you're strong in Biology, you might allocate time in a 3:4:5 ratio for Physics, Chemistry, and Biology. Adjust this ratio based on your preparation level.</p>
+      <p>Distribute your time wisely based on your strengths. A common effective time allocation could be 4:3:3 for Math, Physics, and Chemistry—but adjust it based on your personal comfort level with each subject.</p>
       
       <h3>Integrated Approach</h3>
-      <p>Many topics in PCB are interconnected. For instance, biomolecules in Biology relate to organic chemistry. Thermodynamics applies to both Physics and Chemistry. Recognizing these connections can enhance your understanding.</p>
+      <p>Look for overlaps in topics across subjects. For instance, vectors in Math apply to Physics, and chemical thermodynamics has links to Physics concepts. Connecting dots across subjects improves your conceptual grip.</p>
       
-      <p>Remember, consistency and quality of study matter more than quantity. Stay focused, take regular breaks, and believe in yourself!</p>
+      <p>In the end, consistent effort and smart revision will help you succeed. Focus on quality over quantity, track your progress, and take breaks to recharge. Your goal is not just to study hard, but to study smart. You've got this!</p>
     `,
-    author: 'Dr. Patel',
+    author: 'Prof. Sharma',
     date: '2023-04-22',
-    imageUrl: '/placeholder.svg',
-    tags: ['NEET', 'Biology', 'Chemistry', 'Physics']
-  },
+    imageUrl: 'https://res.cloudinary.com/ddx6avza4/image/upload/v1744129312/n_rz5riq.png',
+    tags: ['JEE', 'Physics', 'Chemistry', 'Math']
+  }
+,  
   {
     id: '3',
     title: 'Mental Health Tips for Exam Stress',
@@ -118,10 +119,50 @@ const mockPosts: BlogPost[] = [
     `,
     author: 'Dr. Kapoor',
     date: '2023-05-10',
-    imageUrl: '/placeholder.svg',
-    tags: ['Mental Health', 'Stress Management', 'Student Wellness']
+    imageUrl: 'https://res.cloudinary.com/ddx6avza4/image/upload/v1744129312/n_rz5riq.png',
+    tags: ['Mental Health', 'Stress Manage', 'Wellness']
+  },{
+    id: '3',
+    title: 'Mastering JEE Advanced: Tips from Toppers',
+    excerpt: 'Top strategies and insights from JEE Advanced toppers to help you excel in your preparation.',
+    content: `
+      <p>Cracking JEE Advanced isn't just about hard work—it's about working smart. We've gathered insights from top rankers and mentors to bring you practical, high-impact tips that can make a real difference in your journey.</p>
+  
+      <h3>1. Build a Strong Foundation</h3>
+      <p>Before diving into complex problems, ensure your NCERT concepts (especially in Physics and Chemistry) are rock-solid. Toppers emphasize that conceptual clarity is key for solving advanced-level questions.</p>
+  
+      <h3>2. Solve Quality Problems, Not Just Quantity</h3>
+      <p>It’s not about how many questions you solve—it’s about how deeply you understand them. Focus on solving a few challenging problems thoroughly rather than rushing through many.</p>
+  
+      <h3>3. Analyze Your Mistakes Ruthlessly</h3>
+      <p>Every mistake is a learning opportunity. Maintain an error log—write down the question, what went wrong, and how you’ll avoid it next time. Review it weekly.</p>
+  
+      <h3>4. Master Previous Year Papers</h3>
+      <p>JEE Advanced has patterns. Solving the last 10–15 years of papers will give you a feel for real exam questions, improve speed, and boost confidence.</p>
+  
+      <h3>5. Don’t Neglect Revision</h3>
+      <p>Toppers revise regularly. Use weekly revision cycles, formula sheets, and flashcards. Don't wait for the syllabus to end—revise alongside your preparation.</p>
+  
+      <h3>6. Give Mock Tests Like It’s the Real Exam</h3>
+      <p>Attempt full-length mock tests under strict exam conditions. Analyze them in detail. Look at your time spent per section, silly errors, and your weak topics.</p>
+  
+      <h3>7. Stay Consistent, Not Just Motivated</h3>
+      <p>JEE Advanced prep is a marathon. Build daily study habits. Even on bad days, sit for at least a short, focused session—it helps maintain momentum.</p>
+  
+      <h3>8. Don’t Ignore Mental and Physical Health</h3>
+      <p>Sleep well, eat right, and take short breaks. A tired brain won’t solve tricky Physics problems. Balance is underrated but crucial.</p>
+  
+      <p>Remember, success in JEE Advanced comes from smart strategy, discipline, and consistency. Follow what works for YOU, stay patient, and keep showing up every day. You’ve got this!</p>
+    `,
+    author: 'Team NuviBrainz',
+    date: '2023-05-10',
+    imageUrl: 'https://res.cloudinary.com/ddx6avza4/image/upload/v1744129312/n_rz5riq.png',
+    tags: ['JEE Advanced', 'Toppers Tips', 'Exam Strategy']
   }
+  
 ];
+
+
 
 const BlogContext = createContext<BlogContextType | undefined>(undefined);
 

@@ -113,7 +113,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <Link to="/login">
-                  <Button className="bg-[#9BBE82] text-white hover:bg-[#8CAD75] flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all rounded-lg">
+                  <Button className="bg-[#9BBE82] text-black hover:bg-[#8CAD75] flex items-center gap-1.5 shadow-sm hover:shadow-md transition-all rounded-lg">
                     <LogIn size={16} />
                     Login
                   </Button>
