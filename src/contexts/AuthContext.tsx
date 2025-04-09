@@ -28,7 +28,7 @@ const mockUsers = [
     name: 'John Student',
     role: 'student',
     avatar: '',
-    courses: ['JEE Advanced', 'NEET Prep'],
+    courses: ['JEE Advanced'],
     progress: 67,
     joinedOn: '2023-10-15',
   },
